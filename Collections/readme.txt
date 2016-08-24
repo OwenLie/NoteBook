@@ -22,6 +22,10 @@ Stack | 栈中存储一组若类型对象
 dictionary  https://msdn.microsoft.com/en-us/library/xfhwa508.aspx
 
 
+**List<T>** 是使用数组实现的一种数据结构，其大小可以根据需要动态增加。List<T>允许重复的数据存在，如果要调用其Sort方法排序，必须保证类型T实现了IComparable<T>接口。
+
+
+
 
 *ArrayList* 在命名空间**System.Collections**下，定义如下：
 > public class ArrayList : **IList**, ICollection, **IEnumerable**, ICloneable
