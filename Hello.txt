@@ -37,4 +37,65 @@ foreach(Person person in People)
     Console.WriteLine(person);
 }
 
-foreach语句的原理是从实现IEnumerable接口的类中调用GetEnumerator()方法，获得一个实现了IEnumerator的类，这个类中有Current, MoveNext
+foreach语句的原理是从实现IEnumerable接口的类中调用GetEnumerator()方法，获得一个实现了IEnumerator的类，这个类中有Current, MoveNext等foreach语句必要的调用方法。
+
+更改People类实现IEnumerable接口。
+public class People : IEnumerable
+{
+    private Person[] people;
+    public People(Person[] people)
+    {
+        people = new Person[people.Length];
+        for(int i = 0; i < people.Length; i++)
+        {
+            this.people[i] = people[i];
+        }
+    }
+
+    IEnumerator GetEnumerator()
+    ｛
+        return new PersonEnum(this.people);
+    }
+} 
+
+实现PersonEnum类如下：
+public class PersonEnum : IEnumerator
+{
+    private Person[] persons;
+    private int position = -1;
+
+    public PersonEnum(Person[] persons)
+    {
+        this.persons = persons;
+    }
+
+    public bool MoveNext()
+    {
+        position++;
+        return position < this.persons.Length;
+    }
+
+    object IEnumerator.Current
+    {
+        get { return Current; }
+    }
+
+    public void Reset()
+    {
+        position = -1;
+    }
+
+    public Person Current
+    {
+        get
+        {
+            try
+            {
+                return this.persons[position];
+            }
+            catch(IndexOutOfRangeException)
+            {
+            }
+        }
+    }
+}
