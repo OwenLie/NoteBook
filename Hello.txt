@@ -1,0 +1,40 @@
+﻿List<string> names = new List<string>();
+foreach(string name in names)
+{
+    Console.WriteLine(name);
+}
+
+以上foreach语句代码中，names类型是List。c sharp允许用户自定义自己的类型以便使用foreach语句。假设有类型People定义如下，
+public class People
+{
+    private Person[] people;
+    public People(Person[] people)
+    {
+        people = new Person[people.Length];
+        for(int i = 0; i < people.Length; i++)
+        {
+            this.people[i] = people[i];
+        }
+    }
+}
+
+其中，Person类的定义如下：
+public class Person
+{
+    private string name;
+    private int age;
+
+    public Person(string name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+我们期待的使用foreach的效果如下：
+foreach(Person person in People)
+{
+    Console.WriteLine(person);
+}
+
+foreach语句的原理是从实现IEnumerable接口的类中调用GetEnumerator()方法，获得一个实现了IEnumerator的类，这个类中有Current, MoveNext
