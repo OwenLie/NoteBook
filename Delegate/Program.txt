@@ -1,0 +1,29 @@
+using System;
+
+// define a delegate, return type is void and accept a string
+internal delegate void MyDelegate(string name);
+
+public sealed class Program
+{
+	public static void Main()
+	{
+		MyDelegate myDelegate1 = new MyDelegate(MyStaticMethod);
+		MyDelegate myDelegate2 = new MyDelegate(new Program().MyInstanceMethod);
+		
+		// use delegate to call method
+		myDelegate1("Owen");
+		myDelegate2("Ricy");
+	}
+	
+	// static method for delegate
+	private static void MyStaticMethod(string name)
+	{
+		Console.WriteLine(name + "'s delegate demo(static)");
+	}
+	
+	// instance method for delegate
+	public void MyInstanceMethod(string name)
+	{
+		Console.WriteLine(name + "'s delegate demo(instance)");
+	}
+}

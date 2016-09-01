@@ -1,0 +1,16 @@
+using System;
+public sealed class Program
+{
+	public static void Main()
+	{
+		Actions actions = Actions.Read | Actions.Write;
+		
+		// if Actions not modified by [Flags], use "F"
+		// to format the output, result: Read, Write
+		Console.WriteLine(actions.ToString("F"));
+		
+		// if Actions modified by [Flags],
+		// result: Read, Write
+		Console.WriteLine(actions);
+	}
+}

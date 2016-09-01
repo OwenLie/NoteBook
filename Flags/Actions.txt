@@ -1,0 +1,9 @@
+using System;
+[Flags]
+internal enum Actions
+{
+	None = 0,
+	Read = 0x0001,
+	Write = 0x0002,
+	ReadWrite
+}
