@@ -1,0 +1,32 @@
+using System;
+
+public sealed class Program
+{
+	public static void Main()
+	{
+		Program p = new Program();
+		
+		OmitCreatingDelegateObject(p.MyFunction);
+		OmitCreatingDelegateObject_WithArgs(p.MyFunction, "Ricy");
+	}
+	
+	// no need to create a delegate object
+	public static void OmitCreatingDelegateObject(Func<string> method)
+	{
+		Console.WriteLine(method());
+	}
+	public static void OmitCreatingDelegateObject_WithArgs(Func<string, string> method, string name)
+	{
+		Console.WriteLine(method(name));
+	}
+	
+	// call back function
+	public string MyFunction()
+	{
+		return "This is Owen's Function";
+	}
+	public string MyFunction(string name)
+	{
+		return "This is " + name + "'s Function";
+	}
+}

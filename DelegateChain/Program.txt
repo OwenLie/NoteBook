@@ -1,0 +1,72 @@
+using System;
+using System.Text;
+
+public sealed class Program
+{
+	internal sealed class Light
+	{
+		public string GetLightPosition()
+		{
+			return "The light is off";
+		}
+	}
+	
+	internal sealed class Fan
+	{
+		public string GetFanSpeed()
+		{
+			throw new InvalidOperationException("Fan speed error");
+		}
+	}
+	
+	internal sealed class Speaker
+	{
+		public string GetSpeakerVolume()
+		{
+			return "The volume is low";
+		}
+	}
+	
+	private delegate string MyDelegate();
+	public static void Main()
+	{
+		// delegate chain
+		MyDelegate delegateChain = null;
+		
+		// add delegate objects to the chain
+		delegateChain += new MyDelegate(new Light().GetLightPosition);
+		delegateChain += new MyDelegate(new Fan().GetFanSpeed);
+		delegateChain += new MyDelegate(new Speaker().GetSpeakerVolume);
+		
+		// call the chain, run all the funcs
+		Console.WriteLine(RunMyDelegates(delegateChain));
+	}
+	
+	// define the operation for each delegate in the chain
+	private static string RunMyDelegates(MyDelegate delegateChain)
+	{
+		if(delegateChain == null)
+			return null;
+		
+		// use string builder to collect all the strings from delegates
+		StringBuilder report = new StringBuilder();
+		
+		// get all the delegates from the chain
+		Delegate[] arrayOfDelegates = delegateChain.GetInvocationList();
+		
+		// run every delegate
+		foreach(MyDelegate myDelegate in arrayOfDelegates)
+		{
+			try
+			{
+				report.AppendFormat("{0}{1}{1}", myDelegate(), Environment.NewLine);
+			}
+			catch(InvalidOperationException e)
+			{
+				report.AppendFormat("{0}{1}{1}", e.Message, Environment.NewLine);
+			}
+		}
+		
+		return report.ToString();
+	}
+}
