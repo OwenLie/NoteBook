@@ -1,0 +1,38 @@
+using System;
+public sealed class Program
+{
+	public static void Main()
+	{
+		// create array
+		string[] myArray = new string[]{"Owen", "Lynn"};
+		// use Length to get the size of the array
+		for(int i = 0; i < myArray.Length; i++)
+			Console.WriteLine(myArray[i]);
+		Console.WriteLine();
+		
+		// create n dimension array
+		string[,] my2dimArray = new string[,]{{"Owen"}, {"Lynn"}};
+		// use GetLength() to get the size of dimension 1
+		for(int i = 0; i < my2dimArray.GetLength(0); i++)
+		{
+			for(int j = 0; j < my2dimArray.GetLength(1); j++)
+				Console.WriteLine(my2dimArray[i,j]);
+		}
+		Console.WriteLine();
+		foreach(string str in my2dimArray)
+		{
+			Console.WriteLine(str);
+		}
+		Console.WriteLine();
+		
+		// create jagged array
+		string[][] myJaggedArray = new string[2][];
+		myJaggedArray[0] = new string[]{"Owen"};
+		myJaggedArray[1] = new string[]{"Lynn", "Alice"};
+		foreach(string[] array in myJaggedArray)
+		{
+			foreach(string str in array)
+				Console.WriteLine(str);
+		}
+	}
+}
